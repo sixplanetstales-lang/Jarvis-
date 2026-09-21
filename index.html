@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d1117" />
+  <title>NEXUS AI Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Chat history">
+      <div class="sidebar-head"><a class="brand" href="#" aria-label="NEXUS home"><span class="brand-mark">✦</span><span>NEXUS</span></a><button class="icon-btn mobile-only" id="closeSidebar" aria-label="Close menu">×</button></div>
+      <button class="new-chat" id="newChat"><span>＋</span> New chat</button>
+      <label class="search"><span>⌕</span><input id="chatSearch" placeholder="Search chats" aria-label="Search chats"></label>
+      <div class="history" id="history"></div>
+      <div class="sidebar-bottom">
+        <button class="side-action" id="settingsBtn"><span>⚙</span> Settings</button>
+        <button class="side-action" id="themeBtn"><span id="themeIcon">☾</span> <span id="themeLabel">Dark mode</span></button>
+        <p class="privacy">Your chats and API key stay in this browser.</p>
+      </div>
+    </aside>
+    <div class="scrim" id="scrim"></div>
+    <main class="main">
+      <header class="topbar"><button class="icon-btn mobile-only" id="openSidebar" aria-label="Open menu">☰</button><div class="mobile-title"><span class="brand-mark">✦</span> NEXUS</div><div class="topbar-spacer"></div><button class="icon-btn" id="topSettings" aria-label="Open settings">⚙</button></header>
+      <section class="chat-view" id="chatView">
+        <div class="welcome" id="welcome"><div class="welcome-orb">✦</div><p class="eyebrow">NEXUS AI ASSISTANT</p><h1>What are you learning today?</h1><p class="welcome-copy">Your private study partner for understanding ideas, practicing skills, and getting unstuck.</p><div class="suggestions"><button data-suggestion="Explain photosynthesis like I’m 12">Explain a concept</button><button data-suggestion="Quiz me on my current subject">Quiz me</button><button data-suggestion="Help me brainstorm a project idea">Brainstorm ideas</button></div></div>
+        <div class="messages" id="messages" aria-live="polite"></div>
+      </section>
+      <section class="composer-wrap">
+        <div class="mode-row" id="modeRow"></div>
+        <div class="subject-row"><label for="subject">Subject</label><select id="subject"><option value="General">General</option><option>Mathematics</option><option>Science</option><option>English</option><option>History</option><option>Geography</option><option>Computer Science</option><option>Languages</option><option>Art & Design</option><option>Economics</option></select><span class="provider-pill" id="providerPill">Not connected</span></div>
+        <div class="composer" id="composer"><textarea id="prompt" rows="1" placeholder="Message NEXUS..." aria-label="Message NEXUS"></textarea><button class="send-btn" id="sendBtn" aria-label="Send message">↑</button><button class="stop-btn" id="stopBtn" aria-label="Stop generating">■</button></div>
+        <p class="disclaimer">NEXUS can make mistakes. Check important information.</p>
+      </section>
+    </main>
+  </div>
+  <dialog id="settingsDialog"><div class="modal-head"><div><p class="eyebrow">CONFIGURATION</p><h2>Connect your assistant</h2></div><button class="icon-btn" id="closeSettings">×</button></div><div class="settings-tabs"><button class="tab active" data-tab="gemini">Google Gemini</button><button class="tab" data-tab="local">On-device (WebLLM)</button></div><div id="geminiTab" class="tab-panel"><label class="field-label" for="apiKey">Gemini API key</label><div class="key-input"><input id="apiKey" type="password" placeholder="Paste your key from Google AI Studio"><button id="toggleKey" class="icon-btn">◉</button></div><p class="help">Your key is saved only in localStorage and sent directly to Google from your browser.</p><ol class="guide"><li>Open <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer">Google AI Studio</a>.</li><li>Sign in and choose <b>Create API key</b>.</li><li>Paste the key here and save.</li></ol><button class="primary full" id="saveKey">Save Gemini key</button><button class="danger-link" id="clearKey">Remove saved key</button></div><div id="localTab" class="tab-panel hidden"><p>Run a small language model in your browser with WebGPU. The first download can be large; after that it works offline.</p><div class="local-status" id="localStatus">No model downloaded.</div><div class="progress"><span id="progressBar"></span></div><button class="primary full" id="downloadModel">Download model</button><p class="help">Requires a modern browser with WebGPU. Model files are stored by your browser.</p></div><div class="modal-foot"><span id="settingsStatus"></span><button class="secondary" id="doneSettings">Done</button></div></dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
